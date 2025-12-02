@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>week6</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Numans&display=swap" rel="stylesheet">
+
+<style>
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ffffff;
+    font-family:'Numans',sans-serif;
+  }
+
+  .back{
+    position:fixed;
+    top:24px;
+    left:24px;
+    font-size:16px;
+    color:#666;
+    text-decoration:none;
+    z-index:10;
+  }
+
+  .pad-wrap{
+    position:relative;
+    width:1000px;     
+    max-width:95vw;    
+  }
+
+  .pad-outline{
+    position:relative;
+    width:100%;
+    display:block;
+    z-index:3;
+    pointer-events:none;
+  }
+
+  .pad-base{
+    position:absolute;
+    top:51%;
+    left:50%;
+    width:97%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+  }
+
+  /* 🔹 기본(데스크탑) – 네가 처음 맞춘 px 그대로 */
+  .heart-area{
+    position:absolute;
+    top:80px;
+    left:100px;
+    width:calc(100% - 200px);
+    height:calc(100% - 120px);
+    overflow:hidden;
+    pointer-events:none;
+    z-index:2;
+  }
+
+  .heart-button{
+    position:absolute;
+    bottom:210px;
+    left:319px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    z-index:4;
+  }
+
+  .heart-button img{
+    width:64px;
+    height:auto;
+    display:block;
+  }
+
+  .heart{
+    position:absolute;
+    width:64px;
+    height:auto;
+    top:-80px;
+    animation:fall var(--dur) linear forwards;
+  }
+
+  @keyframes fall{
+    from{ top:-80px; }
+    to{ top:120%; }
+  }
+
+
+  @media (max-width: 900px){
+    .pad-wrap{
+      width:100%;
+      max-width:100vw;
+    }
+
+    .heart-area{
+      top:8%;        
+      left:10%;
+      width:80%;
+      height:84%;
+    }
+
+    .heart-button{
+      bottom:20%;
+      left:32%;
+      transform:translateX(0) scale(0.9);  
+    }
+  }
+
+  @media (max-width: 480px){
+    body{
+      align-items:flex-start;
+      padding-top:40px;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <a href="collection.html" class="back">&lt; back</a>
+
+  <div class="pad-wrap">
+    <img src="padoutline.png" class="pad-outline" alt="pad outline">
+    <img src="pad.png"       class="pad-base"    alt="chat screen">
+
+    <div id="heart-area" class="heart-area"></div>
+
+    <button id="heart-button" class="heart-button">
+      <img src="heartbutton.png" alt="heart button">
+    </button>
+  </div>
+
+  <script>
+    const heartArea   = document.getElementById('heart-area');
+    const heartButton = document.getElementById('heart-button');
+
+    const heartImages = [
+      'heart1.png','heart2.png','heart3.png','heart4.png',
+      'heart5.png','heart6.png','heart7.png','heart8.png'
+    ];
+
+    function dropHearts(){
+      const count     = 12;
+      const areaWidth = heartArea.clientWidth;
+      const heartSize = 64;
+
+      for(let i=0;i<count;i++){
+        const img = document.createElement('img');
+        img.className = 'heart';
+        img.src = heartImages[Math.floor(Math.random()*heartImages.length)];
+
+        const x = Math.random() * (areaWidth - heartSize);
+        img.style.left = x + 'px';
+
+        const dur = 1.6 + Math.random()*1.0;
+        img.style.setProperty('--dur', dur + 's');
+
+        img.style.animationDelay = (i*0.1) + 's';
+
+        heartArea.appendChild(img);
+
+        img.addEventListener('animationend', () => {
+          img.remove();
+        });
+      }
+    }
+
+    heartButton.addEventListener('click', dropHearts);
+  </script>
+</body>
+</html>
