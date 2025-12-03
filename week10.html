@@ -18,7 +18,7 @@
       justify-content: center;  
       align-items: center;
       background: #ffffff;
-      font-family: "Montserrat Alternates", sans-serif
+      font-family: "Montserrat Alternates", sans-serif;
     }
 
     .back {
@@ -101,6 +101,40 @@
 
     input[type="file"] {
       display: none;
+    }
+
+    @media (max-width: 768px) {
+
+      body {
+        justify-content: flex-start;
+        padding: 80px 0 40px;
+      }
+
+      .back {
+        top: 12px;
+        left: 16px;
+        font-size: 14px;
+      }
+
+      h1 {
+        margin: 20px 16px 40px;
+        font-size: 16px;
+        padding: 0 16px;
+      }
+
+      .polaroid-row {
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .polaroid {
+        width: 260px;  
+      }
+
+      .placeholder {
+        font-size: 11px;
+      }
     }
   </style>
 </head>
