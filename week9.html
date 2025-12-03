@@ -16,7 +16,7 @@
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      padding-top:320px;
+      padding-top:300px;     
       background:#ffffff;
       font-family:"Montserrat Alternates",sans-serif;
     }
@@ -34,7 +34,8 @@
 
     .scene{
       position:relative;
-      width:min(1449px, 95vw);
+      width:min(1449px, 90vw);  
+      margin:auto;
     }
 
     .scene-bg{
@@ -52,7 +53,7 @@
 
     .duck-wrap{
       position:absolute;
-      width:250px;
+      width:250px;           
       transform:translateY(-50%);
       cursor:grab;
       z-index:5;
@@ -64,6 +65,26 @@
       display:block;
       pointer-events:none;
     }
+
+    @media (max-width: 768px){
+
+      body{
+        padding-top:190px;  
+      }
+
+      .scene{
+        width:90vw;            
+      }
+
+      .duck-wrap{
+        width:120px;          
+      }
+
+      .water-area{
+        top:3%;           
+        height:20%;
+      }
+    }
   </style>
 </head>
 
@@ -72,11 +93,11 @@
 <a href="collection.html" class="back">< back</a>
 
 <div class="scene" id="scene">
-  <img src="week9bath.png" class="scene-bg">
+  <img src="week9bath.png" class="scene-bg" alt="bath">
 
   <div class="water-area" id="water">
     <div class="duck-wrap" id="duck">
-      <img src="duck.png" class="duck" id="duckImg">
+      <img src="duck.png" class="duck" id="duckImg" alt="duck">
     </div>
   </div>
 </div>
@@ -84,17 +105,18 @@
 <audio id="sound" src="ducktoy.mp3" preload="auto"></audio>
 
 <script>
-  const duck    = document.getElementById("duck");
+  const duck = document.getElementById("duck");
   const duckImg = document.getElementById("duckImg");
-  const water   = document.getElementById("water");
-  const sound   = document.getElementById("sound");
+  const water = document.getElementById("water");
+  const sound = document.getElementById("sound");
 
   function center(){
     const duckWidth = duck.offsetWidth;
     const waterWidth = water.clientWidth;
-    duck.style.left = (waterWidth - duckWidth) / 2 + "px"; 
+    duck.style.left = (waterWidth - duckWidth) / 2 + "px";
     duck.style.top  = "50%";
   }
+
   window.addEventListener("load", center);
   window.addEventListener("resize", center);
 
@@ -117,19 +139,19 @@
 
   function handleMove(e){
     if (!isDown) return;
-    e.preventDefault();
 
+    e.preventDefault();
     const clientX = getClientX(e);
     const dx = clientX - startClientX;
 
     if (Math.abs(dx) > 3) isDragging = true;
 
     const waterWidth = water.clientWidth;
-    const duckWidth  = duck.offsetWidth;
+    const duckWidth = duck.offsetWidth;
 
-    const max = waterWidth - duckWidth;   
+    const max = waterWidth - duckWidth;
     let newLeft = startLeft + dx;
-    newLeft = Math.max(0, Math.min(max, newLeft));  
+    newLeft = Math.max(0, Math.min(max, newLeft));
     duck.style.left = newLeft + "px";
   }
 
@@ -144,10 +166,8 @@
 
   function squeak(){
     duckImg.src = "duck2.png";
-    if (sound){
-      sound.currentTime = 0;
-      sound.play().catch(()=>{});
-    }
+    sound.currentTime = 0;
+    sound.play().catch(()=>{});
     setTimeout(()=>{ duckImg.src = "duck.png"; }, 120);
   }
 
